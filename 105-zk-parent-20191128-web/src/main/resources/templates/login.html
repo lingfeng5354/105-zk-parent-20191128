@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <form method="post" action="/user/login">
+        <table>
+            <tr>
+                <td colspan="2">
+                    请登录
+                </td>
+            </tr>
+            <tr>
+                <td>账号：</td>
+                <td>
+                    <input type="text" name="userName">
+                </td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td>
+                    <input type="text" name="userPassword">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <h3 th:text="${msg}"></h3>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">登录</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit"><a href="/user/toRegister">注册</a></button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <div>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            文件名：<input type="file" name="uploadFile">
+            <button type="submit">上传</button>
+        </form>
+    </div>
+</body>
+</html>

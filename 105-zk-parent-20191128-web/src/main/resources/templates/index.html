@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <style type="text/css">
+        #upBook{
+
+            display: none;
+        }
+        #addBook{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td><a href="/user/toLogin">登录</a> </td>
+            <td><a href="/user/outLogin">退出登录</a> </td>
+        </tr>
+        <tr>
+            <td><a href="/book/getAllBook" >查看所有书籍</a> </td>
+            <td><a onclick="addBook()" shiro:hasPermission="addBook">添加书籍</a> </td>
+        </tr>
+    </table>
+    <div id="addBook">
+        <form action="/book/addBook" method="post">
+            <table>
+                <tr>
+                    <td>书籍名称</td>
+                    <td><input type="text" name="bookName"></td>
+                </tr>
+                <tr>
+                    <td>书籍库存</td>
+                    <td><input type="text" name="bookStore"></td>
+                </tr>
+                <tr>
+                    <td>书籍价格</td>
+                    <td><input type="text" name="bookPrice"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="提交" onclick="hideAddDiv()"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <table>
+        <tr>
+            <td>书籍编号</td>
+            <td>书籍名称</td>
+            <td>书籍库存</td>
+            <td>书籍价格</td>
+            <td shiro:hasPermission="updateBook">修改操作</td>
+            <td shiro:hasPermission="deleteBook">删除操作</td>
+        </tr>
+        <tr th:each="book,index:${bookList}">
+            <td th:text="${index.count}"></td>
+            <td th:text="${book.bookName}"></td>
+            <td th:text="${book.bookStore}"></td>
+            <td th:text="${book.bookPrice}"></td>
+<!--            <td><a  th:onclick="'javascript:updateBook('+${book.bookId}+${book.bookName}+${book.bookStore}+${book.bookPrice}+')'" shiro:hasPermission="updateBook">修改</a></td>-->
+            <td><a th:data-id="${book.bookId}" th:data-name="${book.bookName}" th:data-store="${book.bookStore}" th:data-price="${book.bookPrice}"
+                   th:onclick="'updateBook('+this+')'" shiro:hasPermission="updateBook">修改</a></td>
+            <td><a th:href="@{'/book/deleteBook?bookId='+${book.bookId}}" shiro:hasPermission="deleteBook">删除</a></td>
+<!--            th:href="@{'/book/update?bookId='+${book.bookId}}"-->
+        </tr>
+    </table>
+    <div id="upBook">
+        <form action="/book/updateBook" method="post">
+            <table>
+                <tr>
+                    <td>书籍编号</td>
+                    <td><input type="text" name="bookId" id="bookId"></td>
+                </tr>
+                <tr>
+                    <td>书籍名称</td>
+                    <td><input type="text" name="bookName" id="bookName"></td>
+                </tr>
+                <tr>
+                    <td>书籍库存</td>
+                    <td><input type="text" name="bookStore" id="bookStore"></td>
+                </tr>
+                <tr>
+                    <td>书籍价格</td>
+                    <td><input type="text" name="bookPrice" id="bookPrice"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" onclick="hideUpdateDiv()"value="提交"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+    <script src="/static/common/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            updateBook=function(book) {
+                $("#bookId").val(book.getAttribute('data-id'));
+                $("#bookName").val(book.getAttribute('data-name'));
+                $("#bookStore").val(book.getAttribute('data-store'));
+                $("#bookPrice").val(book.getAttribute('data-price'));
+                $("#upBook").css("display","block");
+            };
+            addBook=function() {
+                $("#addBook").css("display","block");
+
+            };
+            hideUpdateDiv=function() {
+                window.location.reload();
+                $("#upBook").css("display","none");
+            };
+            hideAddDiv=function() {
+                window.location.reload();
+                $("#addBook").css("display","none");
+            };
+        })
+    </script>
+</html>

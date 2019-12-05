@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+<!--    创建父子工程时，父工程中没有任何的代码，不能单独运行，只做管理-->
+<!--    父工程中有子工程和子模块-->
+<!--    子工程：具有业务逻辑并且可以单独部署。子工程只能有一个父工程
+        子模块：提取出子工程通用的模块，做成jar包，当子工程需要使用的时候直接在pom中引入依赖-->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.0.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.aaa</groupId>
+    <artifactId>105-zk-parent-20191128</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>105-zk-parent-20191128-web</module>
+        <module>105-zk-parent-20191128-mapper</module>
+        <module>105-zk-parent-20191128-service</module>
+        <module>105-zk-parent-20191128-model</module>
+        <module>105-zk-parent-20191128-shiro</module>
+        <module>105-zk-parent-20191128-common</module>
+    </modules>
+    <dependencies>
+
+    </dependencies>
+<!--    只是声明版本号-->
+    <dependencyManagement>
+        <dependencies>
+
+            <!--MyBatis与springboot集成的启动依赖-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.1.1</version>
+            </dependency>
+
+            <!--数据库连接驱动的依赖-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.26</version>
+            </dependency>
+
+            <!--添加druid数据连接池的依赖-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>1.1.20</version>
+            </dependency>
+
+            <!--shiro与spring boot集成的依赖-->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>1.4.1</version>
+            </dependency>
+
+            <!--thymeleaf与shiro整合包-->
+            <dependency>
+                <groupId>com.github.theborakompanioni</groupId>
+                <artifactId>thymeleaf-extras-shiro</artifactId>
+                <version>2.0.0</version>
+            </dependency>
+
+            <!--apache ftp文件上传所需-->
+            <dependency>
+                <groupId>commons-net</groupId>
+                <artifactId>commons-net</artifactId>
+                <version>3.6</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+
+</project>
